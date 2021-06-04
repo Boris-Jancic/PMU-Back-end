@@ -37,12 +37,12 @@ public interface ArticleApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getArticle(@PathVariable("id") Long id);
 
-    @PutMapping(value = "/updateArticle",
+    @PutMapping(value = "/update/plant",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity updateArticle(@Valid @RequestBody Article article);
 
-    @DeleteMapping(value = "/deleteArticle/{id}")
+    @DeleteMapping(value = "/plants/{id}")
     ResponseEntity<?> deleteArticle(@PathVariable("id") Long id);
 
 }

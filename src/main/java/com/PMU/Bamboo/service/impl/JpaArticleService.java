@@ -26,19 +26,19 @@ public class JpaArticleService implements ArticleService {
     @Override
     public List<Article> getSellerArticles(Long id) {
         List<Article> articles = articleRepo.getSellerArticles(id);
-        List<Discount> discounts = discountRepo.getActualDiscounts(id);
-
-        for (Article article : articles) {
-            double articlePrice = article.getPrice();
-            double discountPrice = 0;
-            for (Discount discount : discounts) {
-                if (discount.getArticle().getId() == article.getId()) {
-                    discountPrice = articlePrice - articlePrice * (discount.getDiscountPercent() * 0.01);
-                    article.setPrice(discountPrice);
-                }
-            }
-            System.out.println(article);
-        }
+//        List<Discount> discounts = discountRepo.getActualDiscounts(id);
+//
+//        for (Article article : articles) {
+//            double articlePrice = article.getPrice();
+//            double discountPrice = 0;
+//            for (Discount discount : discounts) {
+//                if (discount.getArticle().getId() == article.getId()) {
+//                    discountPrice = articlePrice - articlePrice * (discount.getDiscountPercent() * 0.01);
+//                    article.setPrice(discountPrice);
+//                }
+//            }
+//            System.out.println(article);
+//        }
 
         return articles;
     }
