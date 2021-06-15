@@ -77,24 +77,17 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
-    public ResponseEntity<String> login(@RequestBody AuthDto dto) {
+    public ResponseEntity<User> login(@RequestBody AuthDto dto) {
         User user = userRepo.findByUsername(dto.getUsername());
-        if (!user.isBlocked()) {
-//            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
-//            Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//            try {
-//                UserDetails userDetails = this.userDetailsService.loadUserByUsername(dto.getUsername());
-//                return ResponseEntity.ok(this.tokenUtils.generateToken(userDetails));
-//            } catch (Exception var5) {
-//                return ResponseEntity.notFound().build();
-//            }
-
-                return new ResponseEntity(user, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        System.out.println("AAAAAAAAAAA");
+        System.out.println(dto.getUsername());
+        System.out.println(dto.getPassword());
+        System.out.println(user);
+        System.out.println("AAAAAAAAAAA");
+        if (user != null) {
+            return new ResponseEntity<User>(user, HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity getUser(String username) {
@@ -102,7 +95,6 @@ public class UserApiImpl implements UserApi {
         return user
                 .<ResponseEntity>map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
-
     }
 
     @Override

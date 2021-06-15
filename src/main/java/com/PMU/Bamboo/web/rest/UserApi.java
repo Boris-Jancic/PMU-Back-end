@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 @RestController
@@ -28,7 +27,7 @@ public interface UserApi {
 
     @PostMapping(value = "/users/auth",
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<String> login(@RequestBody AuthDto dto);
+    ResponseEntity<User> login(@RequestBody AuthDto dto);
 
     @GetMapping(value = "/user/{username}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
