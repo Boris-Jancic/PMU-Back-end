@@ -59,4 +59,9 @@ public class JpaUserService implements UserService {
     public boolean changePassword(UserPasswordChangeDto userPasswordChangeDto) {
         return false;
     }
+
+    @Override
+    public Seller findSellerByUser(Long id) {
+        return sellerRepo.findByUserId(id);
+    }
 }

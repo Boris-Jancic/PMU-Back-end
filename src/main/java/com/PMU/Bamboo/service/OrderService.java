@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface OrderService {
     BuyerOrder saveBuyerOrder(BuyerOrder buyerOrder);
     BuyerOrder findById(Long id);
+    Long findLastOrder();
     OrderedArticle saveOrderedArticle(OrderedArticle orderedArticle);
     List<BuyerOrder> getBuyerOrders(String username);
     List<BuyerOrder> getSellerComments(String username);

@@ -8,8 +8,6 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 public class OrderedArticleDto {
-    @NotNull
-    private int quanity;
-    @NotNull
+    private int quantity;
     private long articleId;
 }

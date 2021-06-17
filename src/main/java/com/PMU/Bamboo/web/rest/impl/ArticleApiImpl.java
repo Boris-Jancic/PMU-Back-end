@@ -66,7 +66,7 @@ public class ArticleApiImpl implements ArticleApi {
     }
 
     @Override
-    public ResponseEntity getArticle(Long id) {
+    public ResponseEntity getPlant(Long id) {
         return new ResponseEntity<>(articleService.one(id), HttpStatus.OK);
     }
 

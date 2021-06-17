@@ -41,6 +41,10 @@ public interface UserApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<User> getSellers();
 
+    @GetMapping(value = "/sellers/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Seller> getSeller(@PathVariable("id") Long id);
+
     @PutMapping(value = "/user/changePass/{username}",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})

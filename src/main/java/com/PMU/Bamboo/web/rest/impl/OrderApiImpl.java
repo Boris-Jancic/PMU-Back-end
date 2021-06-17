@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class OrderApiImpl implements OrderApi {
@@ -40,19 +41,20 @@ public class OrderApiImpl implements OrderApi {
         BuyerOrder buyerOrder = toEntityBuyerO.convert(dto);
         System.out.println(buyerOrder);
         if (buyerOrder != null) {
-            orderService.saveBuyerOrder(buyerOrder);
-            System.out.println(buyerOrder.getId());
-            orderId = buyerOrder.getId();
+            BuyerOrder saved = orderService.saveBuyerOrder(buyerOrder);
+            System.out.println(saved.getId());
+            orderId = saved.getId();
             return new ResponseEntity<>(buyerOrder, HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @Override
-    public ResponseEntity postOrderedArticle(@Valid OrderedArticleDto dto) {
+    public ResponseEntity postOrderedArticle(@Valid OrderedArticleDto dto) throws InterruptedException {
         OrderedArticle orderedArticle = toEntityOrderA.convert(dto);
         if (orderedArticle != null) {
-            orderedArticle.setOrderId(orderId);
+            TimeUnit.SECONDS.sleep(3);
+            orderedArticle.setOrderId(orderService.findLastOrder());
             orderService.saveOrderedArticle(orderedArticle);
             return new ResponseEntity<>(orderedArticle, HttpStatus.OK);
         }

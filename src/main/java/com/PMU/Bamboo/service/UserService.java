@@ -22,4 +22,6 @@ public interface UserService {
     User findByUsername(String username);
 
     boolean changePassword(UserPasswordChangeDto userPasswordChangeDto);
+
+    Seller findSellerByUser(Long id);
 }

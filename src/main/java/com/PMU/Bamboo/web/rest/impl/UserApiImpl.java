@@ -110,6 +110,11 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
+    public ResponseEntity<Seller> getSeller(Long id) {
+        return new ResponseEntity<>(userService.findSellerByUser(id), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<Void> changePassword(UserPasswordChangeDto dto) {
         if (!dto.getPassword().equals(dto.getPasswordConfirm())) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);

@@ -20,6 +20,12 @@ public class JpaOrderServiceImpl implements OrderService {
     @Autowired
     private OrderedArticleRepo orderedArticleRepo;
 
+
+    @Override
+    public Long findLastOrder() {
+        return buyerOrderRepo.findLastOrder();
+    }
+
     @Override
     public BuyerOrder saveBuyerOrder(BuyerOrder buyerOrder) {
         return buyerOrderRepo.save(buyerOrder);

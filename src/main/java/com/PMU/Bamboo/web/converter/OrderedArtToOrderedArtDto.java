@@ -14,7 +14,7 @@ public class OrderedArtToOrderedArtDto implements Converter<OrderedArticle, Orde
     @Override
     public OrderedArticleDto convert(OrderedArticle orderedArticle) {
         OrderedArticleDto dto = new OrderedArticleDto();
-        dto.setQuanity(orderedArticle.getQuanity());
+        dto.setQuantity(orderedArticle.getQuanity());
         dto.setArticleId(orderedArticle.getId());
         return dto;
     }

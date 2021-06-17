@@ -33,9 +33,9 @@ public interface ArticleApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getSellerArticles(@PathVariable("id") Long id);
 
-    @GetMapping(value = "/getArticle/{id}",
+    @GetMapping(value = "/plant/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity getArticle(@PathVariable("id") Long id);
+    ResponseEntity getPlant(@PathVariable("id") Long id);
 
     @PutMapping(value = "/update/plant",
             consumes = {MediaType.APPLICATION_JSON_VALUE},

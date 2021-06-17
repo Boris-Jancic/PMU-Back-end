@@ -24,7 +24,7 @@ public class OrderedArtDtoToOrderedArt implements Converter<OrderedArticleDto, O
             orderedArticle.setArticle(article.get());
         else
             orderedArticle.setArticle(null);
-        orderedArticle.setQuanity(dto.getQuanity());
+        orderedArticle.setQuanity(dto.getQuantity());
         return orderedArticle;
     }
 }
