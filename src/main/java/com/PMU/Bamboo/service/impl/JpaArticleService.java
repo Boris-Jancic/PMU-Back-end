@@ -1,18 +1,27 @@
 package com.PMU.Bamboo.service.impl;
 
+import com.PMU.Bamboo.dto.NewArticleDto;
 import com.PMU.Bamboo.model.Article;
 import com.PMU.Bamboo.model.Discount;
 import com.PMU.Bamboo.repository.ArticleRepo;
 import com.PMU.Bamboo.repository.DiscountRepo;
 import com.PMU.Bamboo.service.ArticleService;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class JpaArticleService implements ArticleService {
+
+    private final String imageDirectory = System.getProperty("user.dir") + "/images/";
 
     @Autowired
     private ArticleRepo articleRepo;
@@ -25,22 +34,7 @@ public class JpaArticleService implements ArticleService {
 
     @Override
     public List<Article> getSellerArticles(Long id) {
-        List<Article> articles = articleRepo.getSellerArticles(id);
-//        List<Discount> discounts = discountRepo.getActualDiscounts(id);
-//
-//        for (Article article : articles) {
-//            double articlePrice = article.getPrice();
-//            double discountPrice = 0;
-//            for (Discount discount : discounts) {
-//                if (discount.getArticle().getId() == article.getId()) {
-//                    discountPrice = articlePrice - articlePrice * (discount.getDiscountPercent() * 0.01);
-//                    article.setPrice(discountPrice);
-//                }
-//            }
-//            System.out.println(article);
-//        }
-
-        return articles;
+        return articleRepo.getSellerArticles(id);
     }
 
     @Override
@@ -52,15 +46,12 @@ public class JpaArticleService implements ArticleService {
     }
 
     @Override
-    public Article delete(Long id) {
+    public void delete(Long id) {
         Optional<Article> articleOptional = this.articleRepo.findById(id);
         if(articleOptional.isPresent()) {
             Article article = articleOptional.get();
             articleRepo.deleteById(id);
             discountRepo.deleteByArticleId(id);
-            return article;
-        } else {
-            return null;
         }
     }
 
@@ -84,5 +75,32 @@ public class JpaArticleService implements ArticleService {
             return article;
         }
         return null;
+    }
+    @Override
+    public Article saveNewArticle(NewArticleDto newArticleDto) {
+        //This will decode the String which is encoded by using Base64 class
+        byte[] imageByte = Base64.decodeBase64(newArticleDto.getBase64Image());
+        makeDirectoryIfNotExist(imageDirectory);
+        Path fileNamePath = Paths.get(imageDirectory, newArticleDto.getImgName() + ".jpg");
+        Article article = new Article(
+                newArticleDto.getName(),
+                newArticleDto.getDescription(),
+                Double.parseDouble(newArticleDto.getPrice()),
+                newArticleDto.getImgName() + ".jpg",
+                newArticleDto.getSellerId());
+        try {
+            Files.write(fileNamePath, imageByte);
+            this.articleRepo.save(article);
+            return article;
+        } catch (IOException ex) {
+            return null;
+        }
+    }
+
+    private void makeDirectoryIfNotExist(String imageDirectory) {
+        File directory = new File(imageDirectory);
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
     }
 }

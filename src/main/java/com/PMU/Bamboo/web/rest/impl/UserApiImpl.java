@@ -104,6 +104,11 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
+    public ResponseEntity<Seller> getSeller(String id) {
+        return new ResponseEntity<>(userService.getSellerByUserId(id), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity getSellers() {
         List<Seller> sellers = userService.sellers();
         return new ResponseEntity<>(sellers, HttpStatus.OK);

@@ -1,5 +1,6 @@
 package com.PMU.Bamboo.web.rest;
 
+import com.PMU.Bamboo.dto.NewArticleDto;
 import com.PMU.Bamboo.model.Article;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -7,18 +8,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @CrossOrigin
 public interface ArticleApi {
 
-    @RequestMapping(value = "/addArticle", method = RequestMethod.POST,
+    @RequestMapping(value = "/addArticle",
             produces = {MediaType.IMAGE_PNG_VALUE, "application/json"})
-    ResponseEntity<?> addArticle(@RequestParam("picture")MultipartFile file,
-                                    @RequestParam("name") String name,
-                                    @RequestParam("description") String description,
-                                    @RequestParam("price") String price,
-                                    @RequestParam("sellerId") Long sellerId);
+    ResponseEntity<?> addArticle(@Valid @RequestBody NewArticleDto newArticleDto);
 
     @PostMapping(value = "/plants",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
@@ -27,13 +25,13 @@ public interface ArticleApi {
 
     @GetMapping(value = "/allArticles",
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity getAllArticles();
+    ResponseEntity getAllArticles() throws IOException;
 
     @GetMapping(value = "/sellerArticles/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity getSellerArticles(@PathVariable("id") Long id);
+    ResponseEntity getSellerArticles(@PathVariable("id") Long id) throws IOException;
 
-    @GetMapping(value = "/getArticle/{id}",
+    @GetMapping(value = "/plant/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getArticle(@PathVariable("id") Long id);
 

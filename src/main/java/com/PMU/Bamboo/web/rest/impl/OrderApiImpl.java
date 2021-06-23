@@ -49,8 +49,22 @@ public class OrderApiImpl implements OrderApi {
     }
 
     @Override
-    public ResponseEntity postOrderedArticle(@Valid OrderedArticleDto dto) {
+    public ResponseEntity postOrderedArticle(@Valid OrderedArticleDto dto)
+    {
+        System.out.println(dto);
+        System.out.println(dto);
+        System.out.println(dto);
+        System.out.println(dto);
         OrderedArticle orderedArticle = toEntityOrderA.convert(dto);
+        System.out.println(orderedArticle);
+        System.out.println(orderedArticle);
+        System.out.println(orderedArticle);
+        System.out.println(orderedArticle);
+        System.out.println(orderedArticle);
+        System.out.println(dto);
+        System.out.println(dto);
+        System.out.println(dto);
+        System.out.println(dto);
         if (orderedArticle != null) {
             orderedArticle.setOrderId(orderId);
             orderService.saveOrderedArticle(orderedArticle);
@@ -62,6 +76,7 @@ public class OrderApiImpl implements OrderApi {
     @Override
     public ResponseEntity sellerComments(String username) {
         List<BuyerOrder> orders = orderService.getSellerComments(username);
+        System.out.println(orders);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
@@ -69,6 +84,7 @@ public class OrderApiImpl implements OrderApi {
     public ResponseEntity sellerGrade(String username) {
         Optional<Double> grade = orderService.getSellerGrade(username);
         if (grade.isPresent()) {
+            System.out.println(grade.get());
             return new ResponseEntity<>(grade.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>("This seller has not been rated yet", HttpStatus.NO_CONTENT);

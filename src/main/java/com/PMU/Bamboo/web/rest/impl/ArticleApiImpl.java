@@ -1,8 +1,11 @@
 package com.PMU.Bamboo.web.rest.impl;
 
+import com.PMU.Bamboo.dto.NewArticleDto;
 import com.PMU.Bamboo.model.Article;
 import com.PMU.Bamboo.service.impl.JpaArticleService;
+import com.PMU.Bamboo.web.converter.ArticleToArticleDto;
 import com.PMU.Bamboo.web.rest.ArticleApi;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,26 +28,14 @@ public class ArticleApiImpl implements ArticleApi {
     @Autowired
     private JpaArticleService articleService;
 
-    @Override
-    public ResponseEntity<?> addArticle(MultipartFile file, String name, String description, String price, Long sellerId) {
+    @Autowired
+    private ArticleToArticleDto toDto;
 
-        System.out.println(file);
-        System.out.println(file);
-        System.out.println(file);
-        System.out.println(file);
-        System.out.println(file);
-        System.out.println(file);
-        makeDirectoryIfNotExist(imageDirectory);
-        Path fileNamePath = Paths.get(imageDirectory, file.getName());
-        Article article = new Article(name, description, Double.parseDouble(price), file.getName(), sellerId);
-        System.out.println(article);
-        try {
-            articleService.save(article);
-            Files.write(fileNamePath, file.getBytes());
-            return new ResponseEntity<>(article, HttpStatus.CREATED);
-        } catch (IOException ex) {
-            return new ResponseEntity<>("Image is not uploaded", HttpStatus.BAD_REQUEST);
-        }
+    @SneakyThrows
+    @Override
+    public ResponseEntity<?> addArticle(NewArticleDto newArticleDto) {
+        Article article = articleService.saveNewArticle(newArticleDto);
+        return new ResponseEntity<>(article, HttpStatus.CREATED);
     }
 
     @Override
@@ -54,15 +45,15 @@ public class ArticleApiImpl implements ArticleApi {
     }
 
     @Override
-    public ResponseEntity getAllArticles() {
+    public ResponseEntity getAllArticles() throws IOException {
         List<Article> articles = articleService.getAll();
-        return new ResponseEntity<>(articles, HttpStatus.OK);
+        return new ResponseEntity<>(toDto.convert(articles), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity getSellerArticles(Long id) {
+    public ResponseEntity getSellerArticles(Long id) throws IOException {
         List<Article> articles = articleService.getSellerArticles(id);
-        return new ResponseEntity<>(articles, HttpStatus.OK);
+        return new ResponseEntity<>(toDto.convert(articles), HttpStatus.OK);
     }
 
     @Override

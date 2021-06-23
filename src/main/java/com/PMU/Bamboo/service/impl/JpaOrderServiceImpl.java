@@ -42,11 +42,22 @@ public class JpaOrderServiceImpl implements OrderService {
 
     @Override
     public List<BuyerOrder> getSellerComments(String username) {
+        System.out.println(username);
+        System.out.println(username);
+        System.out.println(username);
+        System.out.println(username);
+        System.out.println(username);
+        System.out.println(username);
+        System.out.println(username);
         return buyerOrderRepo.findSellerComments(username);
     }
 
     @Override
     public Optional<Double> getSellerGrade(String username) {
+
+        System.out.println(username);
+        System.out.println(username);
+        System.out.println(username);
         return buyerOrderRepo.sellerGrade(username);
     }
 }

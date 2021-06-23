@@ -21,7 +21,7 @@ public interface OrderApi {
     ResponseEntity postOrder(@Valid @RequestBody BuyerOrderDto dto);
 
     @PermitAll
-    @PostMapping(value = "/cart/article",
+    @PostMapping(value = "/cart/plant",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity postOrderedArticle(@Valid @RequestBody OrderedArticleDto dto);

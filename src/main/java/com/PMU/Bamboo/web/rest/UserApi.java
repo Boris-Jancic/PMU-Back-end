@@ -37,6 +37,10 @@ public interface UserApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<User> getUsers();
 
+    @GetMapping(value = "/seller/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Seller> getSeller(@PathVariable("id") String username);
+
     @GetMapping(value = "/sellers",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<User> getSellers();
